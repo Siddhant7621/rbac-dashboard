@@ -4,12 +4,14 @@ import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
 import { baseUrl } from '../_app';
+import { useRouter } from 'next/router'; 
 
 const SystemLogsPage = () => {
     const { user } = useAuth();
     const [logs, setLogs] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     const fetchLogs = async () => {
         try {
@@ -60,7 +62,15 @@ const SystemLogsPage = () => {
             </Head>
             
             <div className="container mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-4">System Logs</h1>
+                 <div className="flex justify-between items-center mb-4"> {/* Changed to flex layout */}
+                    <h1 className="text-2xl font-bold">System Logs</h1>
+                    <button
+                        onClick={() => router.push('/admin/users')}
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                        Back to User Management
+                    </button>
+                </div>
                 
                 {error && <div className="bg-red-100 p-3 rounded mb-4">{error}</div>}
                 

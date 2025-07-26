@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
+import { baseUrl } from '../_app';
 
 const ViewContentPage = () => {
     const { user, isAuthenticated, loading } = useAuth();
@@ -11,21 +12,17 @@ const ViewContentPage = () => {
     const [error, setError] = useState('');
 
     const fetchPosts = async () => {
-        if (!isAuthenticated || loading) return;
-        try {
-            // Viewers should only see published posts, backend handles this logic as well
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/content/posts`, {
-                headers: { Authorization: `Bearer ${user.token}` }
-            });
-            setPosts(res.data);
-            setError('');
-        } catch (err) {
-            console.error('Error fetching posts for viewer:', err.response?.data?.message || err.message);
-            setError(err.response?.data?.message || 'Failed to fetch content.');
-            setPosts([]);
-        }
-    };
-
+            try {
+                const res = await axios.get(`${baseUrl}/api/content/posts`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                });
+                setPosts(res.data);
+                setError('');
+            } catch (err) {
+                console.error('Error fetching posts:', err);
+                setError(err.response?.data?.message || 'Failed to fetch posts');
+            }
+        };
     useEffect(() => {
         fetchPosts();
     }, [isAuthenticated, loading, user]);

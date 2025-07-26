@@ -31,23 +31,13 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-  try {
     const { data } = await api.post('/api/auth/login', { email, password });
-    console.log("Login response:", data);
-
     localStorage.setItem('token', data.token);
+    // console.log("tokedknnknn", data.token)
     setUser(data.user);
+    router.push('/dashboard');
+  };
 
-    // Redirect based on role
-    if (data.user.role === 'admin') {
-      router.push('/admin/user');
-    } else {
-      router.push('/dashboard');
-    }
-  } catch (error) {
-    console.error("Login error:", error.response?.data || error.message);
-  }
-};
   const register = async (userData) => {
     const { data } = await api.post('/api/auth/register', userData);
     localStorage.setItem('token', data.token);
