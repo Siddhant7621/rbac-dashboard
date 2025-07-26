@@ -1,0 +1,21 @@
+{
+  "name": "rbac-dashboard",
+  "version": "1.0.0",
+  "description": "Role-Based Access Control Dashboard Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Siddhant7621/rbac-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Siddhant7621/rbac-dashboard/issues"
+  },
+  "homepage": "https://github.com/Siddhant7621/rbac-dashboard#readme"
+}
