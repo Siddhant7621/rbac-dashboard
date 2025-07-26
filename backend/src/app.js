@@ -13,7 +13,21 @@ const app = express();
 
 // Middleware
 app.use(express.json()); // Body parser for JSON
-app.use(cors()); // Enable CORS for all origins (adjust for production)
+
+
+
+// OR restrict to specific domains (recommended for production)
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://yourfrontend.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
+
+
+// In app.js, add this before the route declarations
+app.post('/api/test', (req, res) => {
+  console.log('Test route hit:', req.body);
+  res.send('Unprotected route works!');
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
