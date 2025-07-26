@@ -9,8 +9,10 @@ export default function Home() {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     try {
+        
       await login(email, password);
     } catch (error) {
       alert('Login failed');

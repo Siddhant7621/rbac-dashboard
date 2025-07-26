@@ -26,7 +26,7 @@ Role-Based Access Control Dashboard Project
 3.  **Configure Backend Environment Variables:**
     Create a `.env` file in the `backend/` directory based on `backend/.env.example`:
     ```
-    PORT=5000
+    PORT=5001
     MONGO_URI=mongodb://localhost:27017/rbac_dashboard
     JWT_SECRET=your_super_secret_jwt_key_here_make_it_long_and_random
     ```
@@ -41,7 +41,7 @@ Role-Based Access Control Dashboard Project
 5.  **Configure Frontend Environment Variables:**
     Create a `.env.local` file in the `frontend/` directory based on `frontend/.env.local.example`:
     ```
-    NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
+    NEXT_PUBLIC_API_BASE_URL=http://localhost:5001
     ```
     *Ensure this matches your backend's `PORT`.*
 
@@ -93,7 +93,7 @@ Role-Based Access Control Dashboard Project
 
 1.  **Register Users:**
     -   Navigate to `http://localhost:3000` (or your frontend URL).
-    -   Use the registration form to create users. For initial setup, you might manually create an 'admin' user directly in MongoDB or allow registration with a role for testing (remember to remove this for production).
+    -   Use the registration form to create users. For initial setup, you might manually create an 'admin' user directly in MongoDB or allow registration with a role for testing.
     -   **Initial Admin User (Manual MongoDB Insert):**
         To quickly get an admin user, you can manually insert one into your `users` collection in MongoDB. Remember to hash the password using `bcrypt` before inserting, or create a registration endpoint that allows setting roles for initial setup.
         Example (using `mongosh`):

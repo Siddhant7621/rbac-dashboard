@@ -3,7 +3,6 @@ import { useAuth } from '@/hooks/useAuth';
 import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
-import { baseUrl } from '../_app';
 import { useRouter } from 'next/router'; 
 
 const SystemLogsPage = () => {
@@ -26,7 +25,7 @@ const SystemLogsPage = () => {
             }
 
             console.log('Using token:', token);
-            const res = await axios.get(`${baseUrl}/api/logs`, {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logs`, {
                 headers: { 
                     Authorization: `Bearer ${token}` 
                 }

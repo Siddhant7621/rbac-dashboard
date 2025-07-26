@@ -4,7 +4,6 @@ import { useAuth } from '@/hooks/useAuth';
 import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
-import { baseUrl } from '../_app';
 
 const ContentManagementPage = () => {
     const { user } = useAuth();
@@ -18,7 +17,7 @@ const ContentManagementPage = () => {
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get(`${baseUrl}/api/content/posts`, {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setPosts(res.data);
@@ -50,14 +49,14 @@ const ContentManagementPage = () => {
         try {
             if (editingPost) {
                 // Update existing post
-                await axios.put(`${baseUrl}/api/content/posts/${editingPost._id}`, 
+                await axios.put(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts/${editingPost._id}`, 
                     { title, content, status },
                     { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
                 );
                 setMessage('Post updated successfully!');
             } else {
                 // Create new post - no need to send author as backend handles it
-                await axios.post(`${baseUrl}/api/content/posts`, 
+                await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts`, 
                     { title, content, status },
                     { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
                 );
@@ -82,7 +81,7 @@ const ContentManagementPage = () => {
         if (!confirm('Are you sure you want to delete this post?')) return;
         
         try {
-            await axios.delete(`${baseUrl}/api/content/posts/${postId}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts/${postId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMessage('Post deleted successfully!');

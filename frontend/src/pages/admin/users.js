@@ -3,7 +3,6 @@ import { useAuth } from '@/hooks/useAuth';
 import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
-import { baseUrl } from '../_app';
 import { useRouter } from 'next/router'; 
 const UserManagementPage = () => {
     const { user } = useAuth();
@@ -19,7 +18,7 @@ const UserManagementPage = () => {
             const token = localStorage.getItem('token');
             console.log('Using token:', token);
             
-            const res = await axios.get(`${baseUrl}/api/users`, {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             
@@ -46,7 +45,7 @@ const UserManagementPage = () => {
         
         try {
             const res = await axios.put(
-                `${baseUrl}/api/users/${userId}/role`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${userId}/role`,
                 { role: newRole },
                 {
                     headers: { 
@@ -66,7 +65,7 @@ const UserManagementPage = () => {
         if (!confirm(`Delete user ${username}?`)) return;
         
         try {
-            await axios.delete(`${baseUrl}/api/users/${userId}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/${userId}`, {
                 headers: { 
                     Authorization: `Bearer ${localStorage.getItem('token')}` 
                 }

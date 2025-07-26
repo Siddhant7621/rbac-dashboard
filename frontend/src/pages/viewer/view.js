@@ -4,7 +4,6 @@ import { useAuth } from '@/hooks/useAuth';
 import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
-import { baseUrl } from '../_app';
 
 const ViewContentPage = () => {
     const { user, isAuthenticated, loading } = useAuth();
@@ -13,7 +12,7 @@ const ViewContentPage = () => {
 
     const fetchPosts = async () => {
             try {
-                const res = await axios.get(`${baseUrl}/api/content/posts`, {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
                 });
                 setPosts(res.data);
