@@ -95,117 +95,148 @@ const ContentManagementPage = () => {
     if (!user) return <div>Loading...</div>;
 
     return (
-        <RoleGuard allowedRoles={['editor']}>
-            <Head>
-                <title>Content Management - Editor</title>
-            </Head>
-            
-            <div className="container mx-auto p-4">
-                <h1 className="text-3xl font-bold mb-6">Content Management</h1>
+  <RoleGuard allowedRoles={['editor']}>
+    <Head>
+      <title>Content Management - Editor</title>
+    </Head>
 
-                {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
-                {message && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">{message}</div>}
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
+        Manage Your Posts
+      </h1>
 
-                {/* Post Form */}
-                <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                    <h2 className="text-2xl font-semibold mb-4">{editingPost ? 'Edit Post' : 'Create New Post'}</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 mb-2">Title</label>
-                            <input
-                                type="text"
-                                className="w-full p-2 border rounded"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 mb-2">Content</label>
-                            <textarea
-                                className="w-full p-2 border rounded h-32"
-                                value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 mb-2">Status</label>
-                            <select
-                                className="w-full p-2 border rounded"
-                                value={status}
-                                onChange={(e) => setStatus(e.target.value)}
-                            >
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                            </select>
-                        </div>
-                        <div className="flex gap-2">
-                            <button
-                                type="submit"
-                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                            >
-                                {editingPost ? 'Update Post' : 'Create Post'}
-                            </button>
-                            {editingPost && (
-                                <button
-                                    type="button"
-                                    onClick={resetForm}
-                                    className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                                >
-                                    Cancel
-                                </button>
-                            )}
-                        </div>
-                    </form>
-                </div>
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+          {error}
+        </div>
+      )}
+      {message && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+          {message}
+        </div>
+      )}
 
-                {/* Posts List */}
-                <h2 className="text-2xl font-semibold mb-4">Your Posts</h2>
-                <div className="bg-white rounded shadow overflow-hidden">
-                    <table className="min-w-full">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="px-4 py-2 text-left">Title</th>
-                                <th className="px-4 py-2 text-left">Status</th>
-                                <th className="px-4 py-2 text-left">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {posts.length > 0 ? (
-                                posts.map(post => (
-                                    <tr key={post._id} className="border-t">
-                                        <td className="px-4 py-2">{post.title}</td>
-                                        <td className="px-4 py-2 capitalize">{post.status}</td>
-                                        <td className="px-4 py-2">
-                                            <button
-                                                onClick={() => handleEdit(post)}
-                                                className="text-blue-600 hover:text-blue-800 mr-2"
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(post._id)}
-                                                className="text-red-600 hover:text-red-800"
-                                            >
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="3" className="px-4 py-2 text-center text-gray-500">
-                                        No posts found
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </RoleGuard>
-    );
+      {/* Post Form */}
+      <div className="bg-white p-8 rounded-2xl shadow mb-10">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+          {editingPost ? 'Edit Post' : 'Create New Post'}
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Title
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Content
+            </label>
+            <textarea
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg h-36 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Status
+            </label>
+            <select
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"
+            >
+              {editingPost ? 'Update Post' : 'Create Post'}
+            </button>
+            {editingPost && (
+              <button
+                type="button"
+                onClick={resetForm}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+
+      {/* Posts List */}
+      <div className="bg-white rounded-2xl shadow overflow-hidden">
+        <h2 className="text-2xl font-semibold text-gray-800 px-6 pt-6 pb-2">
+          Your Posts
+        </h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+              <tr>
+                <th className="px-6 py-3 text-left">Title</th>
+                <th className="px-6 py-3 text-left">Status</th>
+                <th className="px-6 py-3 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <tr key={post._id} className="hover:bg-gray-50 transition">
+                    <td className="px-6 py-4 text-gray-800">{post.title}</td>
+                    <td className="px-6 py-4 capitalize text-gray-600">
+                      {post.status}
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => handleEdit(post)}
+                        className="text-blue-600 hover:text-blue-800 font-medium mr-4"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(post._id)}
+                        className="text-red-600 hover:text-red-800 font-medium"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="3"
+                    className="px-6 py-6 text-center text-gray-500"
+                  >
+                    No posts found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </RoleGuard>
+);
+
 };
 
 export default ContentManagementPage;

@@ -12,18 +12,17 @@ const ViewContentPage = () => {
     const [error, setError] = useState('');
 
     const fetchPosts = async () => {
-            try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                });
-                setPosts(res.data);
-                setError('');
-            } catch (err) {
-                console.error('Error fetching posts:', err);
-                setError(err.response?.data?.message || 'Failed to fetch posts');
-                
-            }
-        };
+        try {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/content/posts`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+            setPosts(res.data);
+            setError('');
+        } catch (err) {
+            console.error('Error fetching posts:', err);
+            setError(err.response?.data?.message || 'Failed to fetch posts');
+        }
+    };
     useEffect(() => {
         fetchPosts();
     }, [isAuthenticated, loading, user]);
@@ -31,25 +30,50 @@ const ViewContentPage = () => {
     if (loading) return <div>Loading...</div>;
 
     return (
-        <RoleGuard allowedRoles={['viewer', 'editor', 'admin']}> {/* Admins and Editors can also view content */}
+        <RoleGuard allowedRoles={['viewer', 'editor', 'admin']}>
             <Head>
-                <title>View Content - Viewer</title>
+                <title>Content Library | Viewer</title>
             </Head>
-            <div className="container mx-auto p-4">
-                <h1 className="text-3xl font-bold mb-6">Available Content</h1>
-                {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">{error}</div>}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="max-w-7xl mx-auto px-4 py-8">
+                <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">Explore Content</h1>
+
+                {error && (
+                    <div className="bg-red-100  text-red-700 px-4 py-3 rounded mb-6">
+                        {error}
+                    </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {posts.length > 0 ? (
                         posts.map((post) => (
-                            <div key={post._id} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                                <h2 className="text-xl font-semibold mb-2 text-gray-800">{post.title}</h2>
-                                <p className="text-gray-600 text-sm mb-3">By: {post.author?.username || 'Unknown'} | Published: {new Date(post.createdAt).toLocaleDateString()}</p>
-                                <p className="text-gray-700 text-base line-clamp-3">{post.content}</p> {/* Show a snippet */}
+                            <div
+                                key={post._id}
+                                className="bg-white rounded-xl shadow hover:shadow-lg transition duration-300 p-6 border border-gray-200 flex flex-col justify-between"
+                            >
+                                <div>
+                                    <h2
+                                        className="text-xl font-semibold text-gray-900 truncate"
+                                        title={post.title}
+                                    >
+                                        {post.title}
+                                    </h2>
+                                    <p className="text-sm text-gray-500 mt-1">
+                                        By <span className="font-medium">{post.author?.username || 'Unknown'}</span> ·{' '}
+                                        <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                                    </p>
+
+                                    <p className="text-gray-700 mt-3 text-sm line-clamp-3">
+                                        {post.content}
+                                    </p>
+                                </div>
+
                                 <div className="mt-4 text-right">
                                     <button
-                                        onClick={() => alert(`Full Content of "${post.title}":\n\n${post.content}`)} // Replace with a modal for better UX
-                                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors text-sm"
+                                        onClick={() =>
+                                            alert(`Full Content of "${post.title}":\n\n${post.content}`)
+                                        }
+                                        className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm transition"
                                     >
                                         Read More
                                     </button>
@@ -57,7 +81,7 @@ const ViewContentPage = () => {
                             </div>
                         ))
                     ) : (
-                        <div className="col-span-full p-6 text-center text-gray-500 bg-white rounded-lg shadow-md">
+                        <div className="col-span-full text-center py-12 bg-white shadow rounded-lg text-gray-500">
                             No published content available.
                         </div>
                     )}
