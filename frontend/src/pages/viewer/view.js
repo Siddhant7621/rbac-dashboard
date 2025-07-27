@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import RoleGuard from '@/components/RoleGuard';
 import axios from 'axios';
 import Head from 'next/head';
+import { Router } from 'next/router';
 
 const ViewContentPage = () => {
     const { user, isAuthenticated, loading } = useAuth();
@@ -20,6 +21,7 @@ const ViewContentPage = () => {
             } catch (err) {
                 console.error('Error fetching posts:', err);
                 setError(err.response?.data?.message || 'Failed to fetch posts');
+                
             }
         };
     useEffect(() => {

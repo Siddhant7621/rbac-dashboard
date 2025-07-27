@@ -20,13 +20,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 sm:p-10">
+    <div className="  max-h-5xl w-full flex items-center justify-center -50 px-4">
+      <div className=" flex justify-center items-center flex-col w-[90%] max-w-5xl bg-white rounded-2xl shadow-lg p-8 sm:p-10">
         <h1 className="text-3xl font-semibold text-gray-800 mb-8 text-center">
           Sign in to your account
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
+        <form onSubmit={handleSubmit} className="  w-[60%] flex justify-center items-center flex-col gap-4">
+          <div className='w-full'>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
             <input
               type="email"
@@ -36,7 +36,7 @@ export default function Home() {
               required
             />
           </div>
-          <div>
+          <div className='w-full'>
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <input
               type="password"
