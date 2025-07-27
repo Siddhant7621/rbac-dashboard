@@ -10,20 +10,22 @@ export default function Dashboard() {
   useEffect(() => {
     if (!loading && user) {
       if (user.role === ROLES.ADMIN) {
-        router.replace('/admin/users');
+        router.replace('/admin/users').then(() => {
+      window.location.reload(); // force re-render with new context
+    });
       } else if (user.role === ROLES.EDITOR) {
-        router.replace('/editor/posts');
-      } else if (user.role === ROLES.VIEWER) {
-        router.replace('/viewer/view');
-      } else  {
-        router.replace('/');
+        router.replace('/editor/posts').then(() => {
+      window.location.reload(); // force re-render with new context
+    });
+      } else {
+        router.replace('/viewer/view').then(() => {
+      window.location.reload(); // force re-render with new context
+    });
       }
     }
-  }, [user, loading, router]);
+  }, [user, loading]);
 
-  if (loading || !user) {
-    return <div className="text-center mt-10 text-lg">Redirecting...</div>;
-  }
+  if (loading) return <div className="text-center mt-10 text-gray-600 text-lg">Loading your dashboard...</div>;
 
-  return null;
+  return <div className="text-center mt-10 text-gray-600 text-lg">Redirecting to your dashboard...</div>;
 }

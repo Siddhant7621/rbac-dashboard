@@ -35,7 +35,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', data.token);
     // console.log("tokedknnknn", data.token)
     setUser(data.user);
-    router.push('/dashboard');
+    router.push('/dashboard').then(() => {
+      window.location.reload(); // force re-render with new context
+    });
   };
 
   const register = async (userData) => {
@@ -43,7 +45,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', data.token);
     console.log("au",data.token)
     setUser(data.user);
-    router.push('/dashboard');
+    router.push('/dashboard').then(() => {
+      window.location.reload(); // force re-render with new context
+    });
   };
 
   const logout = () => {
@@ -55,10 +59,12 @@ export const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    {!loading && children}
+  </AuthContext.Provider>
+);
+
+
 };
 
 export const useAuth = () => useContext(AuthContext);
