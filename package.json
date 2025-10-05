@@ -1,21 +1,33 @@
 {
-  "name": "rbac-dashboard",
-  "version": "1.0.0",
-  "description": "Role-Based Access Control Dashboard Project",
-  "main": "index.js",
+  "name": "shalu-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-        "start": "concurrently \"npm run start --prefix backend\" \"npm run dev --prefix frontend\""
-      },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Siddhant7621/rbac-dashboard.git"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Siddhant7621/rbac-dashboard/issues"
+  "dependencies": {
+    "framer-motion": "^12.23.22",
+    "react": "^19.1.1",
+    "react-confetti": "^6.4.0",
+    "react-dom": "^19.1.1"
   },
-  "homepage": "https://github.com/Siddhant7621/rbac-dashboard#readme"
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.14",
+    "vite": "^7.1.7"
+  }
 }
